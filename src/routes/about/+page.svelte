@@ -10,6 +10,15 @@
 		This is a <a href="https://kit.svelte.dev">SvelteKit</a> app. You can make your own by typing the
 		following into your command line and following the prompts:
 	</p>
+	<ul>
+		<li>
+			<a href="/test">truc</a>
+		</li>
+		<li>machin</li>
+		<li>chose</li>
+		<li>rkirri</li>
+		<li>rrr</li>
+	</ul>
 
 	<pre>npm create svelte@latest</pre>
 
