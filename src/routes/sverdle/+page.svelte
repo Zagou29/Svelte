@@ -160,7 +160,7 @@
 					back
 				</button>
 
-				{#each ['qwertyuiop', 'asdfghjkl', 'zxcvbnm'] as row}
+				{#each ['azertyuiop', 'qsdfghjkl', 'xcvbnm'] as row}
 					<div class="row">
 						{#each row as letter}
 							<button

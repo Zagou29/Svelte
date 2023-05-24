@@ -1,15 +1,29 @@
 <script>
+  import { onMount } from "svelte";
   import { menus } from "./menusVideos.js";
+  let url = "https://picsum.photos/v2/list?page=2&limit=200";
+  /**
+   * @type {any[]}
+   */
+  let posts = [];
+  onMount(async () => {
+    const resp = await fetch(url);
+    const data = await resp.json();
+    posts = data
+    /* .filter((/** @type {{ id: number; }} *//* it) => it.id < 121); */
+    console.log(posts);
+  });
 
-  console.log(menus);
   const menuSelect = menus.filter((men) => men.menu === "Famille");
   if (menuSelect[0].src.slice(0, 4) !== "/src") {
     menuSelect.map((men) => (men.src = "/src/lib/box_img" + men.src));
   }
 
-  function handleClick() {
-    window.location.href = "/";
-  }
+ 
+  
+  const handleClick_1 = () => (window.location.href = "/about");
+  const handleClick_2 = () => (window.location.href = "/sverdle");
+  
 </script>
 
 <svelte:head>
@@ -17,15 +31,11 @@
   <meta name="description" content="About this app" />
 </svelte:head>
 <h1>Mes tests</h1>
+
 <div class="envIcon">
   {#each menuSelect as men}
-    <button class="bloc_img" on:click={handleClick}>
-      <img
-        class={"blogs " + men.clas.slice(1, 4)}
-        loading="lazy"
-        src={men.src}
-        alt={men.menu}
-      />
+    <button class="bloc_img" on:click={handleClick_2}>
+      <img class="blogs" loading="lazy" src={men.src} alt={men.detail} />
 
       <span class="ti_blog" data-select={men.clas}>{men.detail} </span>
 
@@ -33,6 +43,19 @@
         <p class="groupe">{men.groupe}</p>
       </ul>
     </button>
+  {/each}
+</div>
+<div class="envIcon">
+  {#each posts as post}
+    <div class="bloc_img" on:keydown on:click={handleClick_1}>
+      <img
+        class="img blogs"
+        loading="lazy"
+        src={post.download_url}
+        data-id={post.id}
+        alt={post.author}
+      />
+    </div>
   {/each}
 </div>
 
@@ -44,7 +67,11 @@
     background-color: rgba(250, 237, 221, 0.3);
     overflow: scroll;
   }
-
+  .img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
   .bloc_img {
     display: grid;
     padding: 0.2rem;
@@ -55,6 +82,7 @@
     color: gold;
     border: none;
     background: transparent;
+    object-fit: cover;
   }
 
   .texte,
@@ -85,12 +113,6 @@
 
   .bloc_img:hover .blogs {
     box-shadow: 5px 5px 5px grey;
-  }
-  .bloc_img:hover .blogs.vid {
-    box-shadow: 5px 5px 5px hsl(240, 100%, 70%);
-  }
-  .bloc_img:hover .blogs.dia {
-    box-shadow: 5px 5px 5px hsl(0, 100%, 70%);
   }
   .bloc_img:hover .ti_blog {
     font-size: calc(var(--fs-tiBlog) * 1.5);
